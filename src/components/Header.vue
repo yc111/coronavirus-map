@@ -2,7 +2,10 @@
     <div class='logo-wrapper'>
         <div class="sidebar-button"></div>
         <div class='logo'></div>
-        <div class='app-title'>nCov疫情大数据分析与预警平台</div>
+        <div class='app-title'>
+          <span>DataMap</span>
+          <span class='subtitle'>COVID_19</span>
+          </div>
     </div>
 </template>
 
@@ -32,7 +35,14 @@
 
 .app-title
   display: inline-block
+  color: #000;
   font-size: 24px
-  font-weight: 800
+  font-weight: 600
+
+.subtitle
+  font-size: 12px
+  font-weight: 400
   margin-left: 5px
+
+
 </style>

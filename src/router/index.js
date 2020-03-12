@@ -16,8 +16,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'situation',
-    component: Situation,
+    redirect: '/situation',
   },
   {
     path: '/situation',

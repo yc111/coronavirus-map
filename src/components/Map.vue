@@ -33,7 +33,7 @@ export default {
   props: ['mapData'],
   data() {
     return {
-      style: { width: '100%', height: `${window.innerHeight - 20}px` },
+      style: { width: '100%', height: `${window.innerHeight}px` },
     };
   },
   computed: {
@@ -53,7 +53,7 @@ export default {
   methods: {
     resizeChart() {
       return _.throttle(() => {
-        this.style.height = `${window.innerHeight - 20}px`;
+        this.style.height = `${window.innerHeight}px`;
         this.echartsInstance.resize();
       }, 400);
     },
@@ -102,8 +102,8 @@ export default {
       this.$echarts.registerMap(mapName, chinaJson, {});
       this.echartsInstance.setOption({
         title: {
-          text: '2020.01.01 疫情地图',
-          subtext: '更新于 2020.01.01 00:09',
+          text: 'CHINA',
+          subtext: 'Update by 2020.01.01 00:09',
           x: 'center',
           y: '60',
           textStyle: {
@@ -113,7 +113,7 @@ export default {
         toolbox: {
           show: true,
           x: 'center',
-          y: 'bottom',
+          bottom: 20,
           feature: {
             saveAsImage: {},
           },
@@ -124,7 +124,8 @@ export default {
           min: 0,
           max: 200000,
           left: '200',
-          bobttom: '60',
+          top: 80,
+          padding: 30,
           calculable: true,
           seriesIndex: [1],
           categories: [LEVE_1, LEVE_2, LEVE_3, LEVE_4, LEVE_5],

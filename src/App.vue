@@ -3,11 +3,12 @@
     <div class='header'>
       <Header/>
     </div>
-    <div class='aside'>
-      <Nav/>
+    <div class='top'>
+      <TopNav/>
     </div>
     <div class='main'>
       <router-view/>
+      <BigMap/>
     </div>
     <div class='footer'>
       <Footer/>
@@ -18,13 +19,15 @@
 <script>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
-import Nav from './components/Nav.vue';
+import TopNav from './components/TopNav.vue';
+import BigMap from './components/BigMap.vue';
 
 export default {
   components: {
     Header,
     Footer,
-    Nav,
+    TopNav,
+    BigMap,
   },
 };
 </script>
@@ -44,11 +47,12 @@ export default {
 .header
   position: fixed;
   line-height: 60px;
+  z-index: 9;
 
 .aside
   position: fixed;
-  z-index: 9;
   top: 80px;
+  z-index: 9;
   text-align: center;
   height: 100%;
   overflow: auto;
@@ -60,6 +64,9 @@ export default {
 .footer
   position: fixed;
   left: 50%;
+  translate: transformX(-50%);
+  bottom: 0;
+  z-index: 9;
   margin-left: -12px;
   font-size: 12px;
 
