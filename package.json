@@ -1,7 +1,7 @@
 {
   "name": "coronavirus-map",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -11,6 +11,12 @@
     "type": "git",
     "url": "https://github.com/yc111/coronavirus-map.git"
   },
+  "author": "champyin",
+  "keywords": [
+    "vue.js",
+    "map",
+    "covid_19"
+  ],
   "dependencies": {
     "axios": "^0.19.2",
     "copy-webpack-plugin": "^5.1.1",
@@ -29,6 +35,7 @@
     "@vue/cli-service": "^4.1.0",
     "@vue/eslint-config-airbnb": "^4.0.0",
     "babel-eslint": "^10.0.3",
+    "babel-plugin-component": "^1.1.1",
     "compression-webpack-plugin": "^3.1.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",

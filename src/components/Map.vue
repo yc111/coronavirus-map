@@ -103,7 +103,7 @@ export default {
       this.echartsInstance.setOption({
         title: {
           text: 'CHINA',
-          subtext: 'Update by 2020.01.01 00:09',
+          subtext: 'Update on 2020.01.01 00:09',
           x: 'center',
           y: '60',
           textStyle: {
