@@ -1,4 +1,4 @@
-# nCoV-map 项目 前端开发指南
+# coronavirus-map 前端开发指南
 
 ## 技术栈
 vue 全家桶
