@@ -17,6 +17,9 @@ function getGeoCoordMap(featuresData) {
 
 function convertProvinceDataWithCp(chinaJson, data) {
   // {name: "天津", value: [117.190182, 39.125596, 42]}
+  if (!data) {
+    return [];
+  }
   const cpData = getGeoCoordMap(chinaJson.features);
   const newData = [];
   for (let i = 0; i < data.length; i += 1) {
@@ -28,6 +31,9 @@ function convertProvinceDataWithCp(chinaJson, data) {
 
 function convertProvinceData(data) {
   // {name: "天津", value: [42, '10-99人']}
+  if (!data) {
+    return [];
+  }
   const newData = [];
   for (let i = 0; i < data.length; i += 1) {
     const temp = data[i].value;

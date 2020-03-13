@@ -4,7 +4,7 @@ import * as types from '../actions-type';
 export default {
   namespaced: true,
   state: {
-    provinceData: [],
+    provinceData: {},
   },
   mutations: {
     [types.SET_PROVINCEDATA](state, payload) {
@@ -17,7 +17,7 @@ export default {
       if (!data || data === -1) {
         data = await fetchAssets(`${args}.json`);
       }
-      commit(types.SET_PROVINCEDATA, data ? data.data : []);
+      commit(types.SET_PROVINCEDATA, data ? data.data : {});
     },
   },
 };

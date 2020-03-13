@@ -1,5 +1,6 @@
 
 
+import moment from 'moment';
 import { convertProvinceData, convertProvinceDataWithCp } from '../../utils/dataHandle';
 
 const LEVE_1 = '>1000人';
@@ -16,22 +17,25 @@ let max;
 const min = 1;
 const pinMax = 100;
 const pinMin = 30;
+const DEFAULT_DATE = '2020.01.31';
 
 class ChartMap {
   constructor(chartInstance, mapName, geo, data) {
     this.chart = chartInstance;
     this.mapName = mapName;
     this.geo = geo;
-    this.data = data;
-    this.render(this.mapName, this.geo, this.data);
+    this.data = data.provinces || [];
+    this.updateDate = data.updateDate;
+    this.render(this.mapName, this.geo, this.data, this.updateDate);
   }
 
-  render(mapName, geo, data) {
+  render(mapName, geo, data, updateDate) {
+    this.updateDate = moment(updateDate || DEFAULT_DATE).format('YYYY.MM.DD');
     this.chart.setOption({
 
       title: {
         text: 'CHINA',
-        subtext: 'Update on 2020.01.01 00:09',
+        subtext: `Update on ${this.updateDate} 00:09`,
         x: 'center',
         y: '60',
         textStyle: {
@@ -151,8 +155,9 @@ class ChartMap {
   }
 
   update(data) {
-    this.data = data;
-    this.render(this.mapName, this.geo, this.data);
+    this.data = data.provinces || [];
+    this.updateDate = data.updateDate;
+    this.render(this.mapName, this.geo, this.data, this.updateDate);
   }
 }
 
