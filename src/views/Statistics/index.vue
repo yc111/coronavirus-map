@@ -19,7 +19,7 @@ export default {
   },
   mounted() {
     try {
-      this[types.SET_PROVINCEDATA]();
+      this[types.SET_PROVINCEDATA]('2020-02-01');
     } catch (e) {
       throw new Error();
     }

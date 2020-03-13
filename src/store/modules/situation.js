@@ -12,10 +12,10 @@ export default {
     },
   },
   actions: {
-    async [types.SET_PROVINCEDATA]({ commit }) {
-      let data = await fetchData('2020-02-01');
+    async [types.SET_PROVINCEDATA]({ commit }, args) {
+      let data = await fetchData(args);
       if (!data || data === -1) {
-        data = await fetchAssets('2020-02-01.json');
+        data = await fetchAssets(`${args}.json`);
       }
       commit(types.SET_PROVINCEDATA, data ? data.data : []);
     },
