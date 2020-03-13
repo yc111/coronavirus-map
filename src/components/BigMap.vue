@@ -32,11 +32,7 @@ export default {
       this.$mapbox.accessToken = MAPBOX_TOKEN;
       this.mapInstance.on('load', () => {
         console.log(this.mapInstance.getStyle().layers);
-        // this.mapInstance.flyTo({
-
-        // });
       });
-      this.$bus.$emit('mapReady', 'show');
     },
   },
   mounted() {

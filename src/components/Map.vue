@@ -11,7 +11,8 @@
 <script>
 import chinaJson from 'echarts/map/json/china.json';
 import _ from 'lodash';
-import provinceData from '../assets/data/20200201';
+
+import { createNamespacedHelpers } from 'vuex';
 
 const LEVE_1 = '>1000人';
 const LEVE_2 = '500-999人';
@@ -28,25 +29,25 @@ let max;
 const min = 1;
 const pinMax = 100;
 const pinMin = 30;
+const { mapState } = createNamespacedHelpers('situation');
+
 export default {
   name: 'Map',
-  props: ['mapData'],
   data() {
     return {
       style: { width: '100%', height: `${window.innerHeight}px` },
     };
   },
   computed: {
+    ...mapState(['provinceData']),
     echartsInstance() {
       return this.$echarts.init(document.getElementById('myChart'));
     },
   },
   watch: {
-    mapData(newData) {
+    provinceData(newData) {
       if (newData) {
         this.drawMap(newData);
-      } else {
-        this.drawMap(provinceData.data);
       }
     },
   },
@@ -222,7 +223,7 @@ export default {
     },
   },
   mounted() {
-    this.drawMap(this.mapData || provinceData.data);
+    this.drawMap(this.provinceData);
     window.addEventListener('resize', this.resizeChart());
   },
   destroyed() {

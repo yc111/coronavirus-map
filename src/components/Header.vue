@@ -3,7 +3,7 @@
         <div class="sidebar-button"></div>
         <div class='logo'></div>
         <div class='app-title'>
-          <span>DataMap</span>
+          <span>CoVMap</span>
           <span class='subtitle'>COVID_19</span>
           </div>
     </div>

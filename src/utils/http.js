@@ -3,7 +3,7 @@ import axios from 'axios';
 const getBaseUrl = (env) => {
   let base = {
     production: '/',
-    development: 'http://localhost:3000',
+    development: '/',
     test: 'http://localhost:8888',
   }[env];
   if (!base) {

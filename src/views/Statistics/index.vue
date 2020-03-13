@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Map :mapData='provinceData'/>
+        <Map/>
     </div>
 </template>
 
@@ -9,13 +9,10 @@ import { createNamespacedHelpers } from 'vuex';
 import Map from '../../components/Map.vue';
 import * as types from '../../store/actions-type';
 
-const { mapActions, mapState } = createNamespacedHelpers('situation');
+const { mapActions } = createNamespacedHelpers('situation');
 export default {
   components: {
     Map,
-  },
-  computed: {
-    ...mapState(['provinceData']),
   },
   methods: {
     ...mapActions([types.SET_PROVINCEDATA]),

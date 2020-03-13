@@ -1,4 +1,4 @@
-import { fetchData } from '@/api';
+import { fetchData, fetchAssets } from '@/api';
 import * as types from '../actions-type';
 
 export default {
@@ -13,7 +13,10 @@ export default {
   },
   actions: {
     async [types.SET_PROVINCEDATA]({ commit }) {
-      const data = await fetchData();
+      let data = await fetchData('2020-02-01');
+      if (!data || data === -1) {
+        data = await fetchAssets('2020-02-01.json');
+      }
       commit(types.SET_PROVINCEDATA, data ? data.data : []);
     },
   },
