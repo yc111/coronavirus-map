@@ -14,7 +14,7 @@ export default {
   actions: {
     async [types.SET_PROVINCEDATA]({ commit }) {
       const data = await fetchData();
-      commit(types.SET_PROVINCEDATA, data.data);
+      commit(types.SET_PROVINCEDATA, data ? data.data : []);
     },
   },
 };

@@ -1,5 +1,6 @@
 <template>
     <div
+      class='big-map'
       id='big_map'
       :style='style'
     ></div>
@@ -28,22 +29,23 @@ export default {
   },
   methods: {
     initMap() {
+      this.$mapbox.accessToken = MAPBOX_TOKEN;
       this.mapInstance.on('load', () => {
         console.log(this.mapInstance.getStyle().layers);
         // this.mapInstance.flyTo({
 
         // });
-        this.$bus.$emit('mapReady', 'show');
       });
+      this.$bus.$emit('mapReady', 'show');
     },
   },
   mounted() {
-    this.$mapbox.accessToken = MAPBOX_TOKEN;
     this.initMap();
   },
 };
 </script>
 
-<style lang='stylus'>
-
+<style scoped lang='stylus'>
+.big-map
+  position: fixed;
 </style>

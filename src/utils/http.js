@@ -4,7 +4,7 @@ const getBaseUrl = (env) => {
   let base = {
     production: '/',
     development: 'http://localhost:3000',
-    test: 'http://localhost:3001',
+    test: 'http://localhost:8888',
   }[env];
   if (!base) {
     base = '/';
@@ -58,10 +58,10 @@ request(options) {
 // 每次请求都会创建新的axios实例。
   const instance = axios.create();
   const config = { // 将用户传过来的参数与公共配置合并。
-    ...options,
     baseURL: this.baseURL,
     timeout: this.timeout,
     withCredentials: this.withCredentials,
+    ...options,
   };
     // 配置拦截器，支持根据不同url配置不同的拦截器。
   this.setInterceptors(instance, options.url);
