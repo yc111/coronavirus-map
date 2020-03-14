@@ -3,11 +3,11 @@
     <div class='dashboard total'>
       <div
         class='data-cell'
-        v-for='(item) in dataList'
-        :key='item.type'
+        v-for='(item) in typeList'
+        :key='item'
       >
-        <span class='num' :class='item.type'>{{item.data | formatterNum}}</span>
-        <span class='num-title'>{{item.label}}</span>
+        <span class='num' :class='item'>{{globalTotal[item] | formatterNum}}</span>
+        <span class='num-title'>Total {{item | upperCase}}</span>
       </div>
     </div>
     <div class='dashboard country'>
@@ -50,7 +50,7 @@
           </colgroup>
           <tr
             class='data-row'
-            v-for='(country, index) in countryData'
+            v-for='(country, index) in worldDataList'
             :key='country.name'
             @click='handleLocate(country.name)'
           >
@@ -67,17 +67,14 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
 
+const { mapState } = createNamespacedHelpers('situation');
 export default {
   name: 'dashboard',
 
   data() {
     return {
-      dataList: [
-        { type: 'confirmed', data: '128229', label: 'Total Confirmed' },
-        { type: 'death', data: '4724', label: 'Total Death' },
-        { type: 'cured', data: '68361', label: 'Total Cured' },
-      ],
       sortType: 'confirmed',
       typeList: ['confirmed', 'death', 'cured'],
       countryData: [],
@@ -85,6 +82,9 @@ export default {
   },
   filters: {
     formatterNum(num) {
+      if (!num) {
+        return 0;
+      }
       const tempstr = num.toString();
       let newnum = '';
       for (let i = 0; i < tempstr.length; i++) {
@@ -101,15 +101,13 @@ export default {
       return newStr;
     },
   },
+  computed: {
+    ...mapState(['worldDataList', 'globalTotal']),
+  },
   methods: {
     handleLocate(addr) {
       this.$bus.$emit('locate', addr);
     },
-  },
-  mounted() {
-    this.$bus.$on('updateList', (data) => {
-      this.countryData = data;
-    });
   },
 };
 
