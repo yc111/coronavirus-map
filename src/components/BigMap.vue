@@ -4,6 +4,7 @@
       title='reset map'
       icon='el-icon-refresh-left'
       circle
+      size='mini'
       style='position:fixed; right: 10px; top: 10px; z-index: 9'
       @click='handleReset'
       ></el-button>
