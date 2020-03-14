@@ -56,9 +56,9 @@
           >
             <td>{{index + 1}}</td>
             <td>{{country.name}}</td>
-            <td>{{country.confirmedNum | formatterNum}}</td>
-            <td>{{country.deathsNum | formatterNum}}</td>
-            <td>{{country.curesNum | formatterNum}}</td>
+            <td class='column-confirmed'>{{country.confirmedNum | formatterNum}}</td>
+            <td class='column-deaths'>{{country.deathsNum | formatterNum}}</td>
+            <td class='column-cures'>{{country.curesNum | formatterNum}}</td>
           </tr>
         </table>
       </div>
@@ -122,7 +122,7 @@ export default {
   box-sizing: border-box;
 
 .dashboard
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.6);
   margin-bottom: 10px;
 
 .dashboard.total
@@ -187,6 +187,18 @@ export default {
 .col-death,
 .col-cured
   width: 80px;
+
+.column-confirmed,
+.column-deaths,
+.column-cures
+  text-align: right;
+
+.column-confirmed
+  padding-right: 15px;
+.column-deaths
+  padding-right: 25px;
+.column-cures
+  padding-right: 35px;
 
 .origin-radio
   opacity: 0;
