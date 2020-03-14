@@ -7,17 +7,25 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+import HeatMapLayer from './maps/HeatMapLayer';
+import dataToGeo from '../utils/data2geo';
+
 const MAPBOX_TOKEN = 'pk.eyJ1IjoieWMxMTEiLCJhIjoiY2s3MDA2dWt6MWMzcTNkcWF5dmY0azRkMyJ9.1FF9zAxaXYfHScMq6fKKbw';
 
+const { mapState } = createNamespacedHelpers('situation');
 export default {
   name: 'mapbox-map',
 
   data() {
     return {
       style: { width: '100%', height: `${window.innerHeight}px` },
+      layerInstance: {},
+      mapOnLoad: false,
     };
   },
   computed: {
+    ...mapState(['worldData']),
     mapInstance() {
       return new this.$mapbox.Map({
         container: 'big_map',
@@ -27,12 +35,26 @@ export default {
       });
     },
   },
+  watch: {
+    worldData(newData) {
+      if (this.mapOnLoad) {
+        this.updateMap(newData);
+      }
+    },
+  },
   methods: {
     initMap() {
       this.$mapbox.accessToken = MAPBOX_TOKEN;
       this.mapInstance.on('load', () => {
-        console.log(this.mapInstance.getStyle().layers);
+        this.mapOnLoad = true;
+        this.layerInstance.HeatMapLayer = new HeatMapLayer(this.mapInstance, dataToGeo(this.worldData).leafRootGeoJoin);
+        // console.log(this.mapInstance.getStyle().layers);
       });
+    },
+    updateMap(data) {
+      if (this.layerInstance.HeatMapLayer) {
+        this.layerInstance.HeatMapLayer.update(dataToGeo(data).leafRootGeoJoin);
+      }
     },
   },
   mounted() {
