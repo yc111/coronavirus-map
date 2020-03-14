@@ -1,9 +1,19 @@
 <template>
-    <div
-      class='big-map'
-      id='big_map'
-      :style='style'
-    ></div>
+  <div>
+      <el-button
+      title='reset map'
+      icon='el-icon-refresh-left'
+      circle
+      style='position:fixed; right: 10px; top: 10px; z-index: 9'
+      @click='handleReset'
+      ></el-button>
+      <div
+        class='big-map'
+        id='big_map'
+        :style='style'
+      >
+      </div>
+  </div>
 </template>
 
 <script>
@@ -12,8 +22,10 @@ import HeatMapLayer from './maps/HeatMapLayer';
 import dataToGeo from '../utils/data2geo';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoieWMxMTEiLCJhIjoiY2s3MDA2dWt6MWMzcTNkcWF5dmY0azRkMyJ9.1FF9zAxaXYfHScMq6fKKbw';
-
 const { mapState } = createNamespacedHelpers('situation');
+const MAP_INIT_CENTER = [106.90, 38.39];
+const MAP_INIT_ZOOM = 1;
+
 export default {
   name: 'mapbox-map',
 
@@ -29,8 +41,8 @@ export default {
     mapInstance() {
       return new this.$mapbox.Map({
         container: 'big_map',
-        center: [106.90, 38.39],
-        zoom: 1,
+        center: MAP_INIT_CENTER,
+        zoom: MAP_INIT_ZOOM,
         style: 'mapbox://styles/mapbox/streets-v11',
       });
     },
@@ -55,6 +67,13 @@ export default {
       if (this.layerInstance.HeatMapLayer) {
         this.layerInstance.HeatMapLayer.update(dataToGeo(data).leafRootGeoJoin);
       }
+    },
+    handleReset() {
+      this.mapInstance.flyTo({
+        center: MAP_INIT_CENTER,
+        zoom: MAP_INIT_ZOOM,
+        essential: true,
+      });
     },
   },
   mounted() {
