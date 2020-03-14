@@ -4,7 +4,7 @@ function getCenter(name) {
   if (globalPoi[name]) {
     return globalPoi[name].pos;
   }
-  return globalPoi['中国'].pos;
+  return null;
 }
 
 export default getCenter;

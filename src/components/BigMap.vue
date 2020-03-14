@@ -77,16 +77,40 @@ export default {
         essential: true,
       });
     },
+    showMarker(poi) {
+      let el = document.querySelector('#marker');
+      if (!el) {
+        el = document.createElement('div');
+        el.style.width = '20px';
+        el.style.height = '20px';
+        el.id = 'marker';
+      }
+      new this.$mapbox.Marker(el)
+        .setLngLat(poi)
+        .addTo(this.mapInstance);
+    },
+    locateAddr(addr) {
+      const poi = getCenter(addr);
+      if (poi) {
+        this.mapInstance.flyTo({
+          center: poi,
+          zoom: 3,
+          speed: 1,
+          curve: 2,
+        });
+        this.showMarker(poi);
+      } else {
+        this.$message({
+          message: `Missing coordinate: ${addr}`,
+          type: 'warning',
+        });
+      }
+    },
   },
   mounted() {
     this.initMap();
     this.$bus.$on('locate', (addr) => {
-      this.mapInstance.flyTo({
-        center: getCenter(addr),
-        zoom: 3,
-        speed: 1,
-        curve: 2,
-      });
+      this.locateAddr(addr);
     });
   },
 };
