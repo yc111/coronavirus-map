@@ -8,6 +8,14 @@
       style='position:fixed; right: 10px; top: 10px; z-index: 9'
       @click='handleReset'
       ></el-button>
+      <el-button
+      title='clear marker'
+      icon='el-icon-brush'
+      circle
+      size='mini'
+      style='position:fixed; right: 50px; top: 10px; z-index: 9'
+      @click='handleClear'
+      ></el-button>
       <div
         class='big-map'
         id='big_map'
@@ -76,6 +84,12 @@ export default {
         zoom: MAP_INIT_ZOOM,
         essential: true,
       });
+    },
+    handleClear() {
+      const el = document.querySelector('#marker');
+      if (el) {
+        el.parentNode.removeChild(el);
+      }
     },
     showMarker(poi) {
       let el = document.querySelector('#marker');
