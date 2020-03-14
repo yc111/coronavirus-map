@@ -30,7 +30,7 @@
                 <input class='origin-radio' type="radio" v-model='sortType' :value='item'>
               </label>
             </th>
-          <tr class='data-row'>
+          <tr class='data-row' @click='handleLocate("中国")'>
             <td>1</td>
             <td>China</td>
             <td>80,982</td>
@@ -75,6 +75,12 @@ export default {
       let newStr = '';
       newStr = str.slice(0, 1).toUpperCase().concat(str.slice(1));
       return newStr;
+    },
+  },
+  methods: {
+    handleLocate(addr) {
+      this.$bus.$emit('locate', addr);
+      console.log('locating');
     },
   },
 };
@@ -136,6 +142,10 @@ export default {
 
 .data-row
   border-bottom: solid 1px rgba(0,0,0,0.1);
+  cursor: pointer;
+
+.data-row:hover
+  background: rgba(255,255,255,0.3);
 
 .statictics-title
   display: flex;
