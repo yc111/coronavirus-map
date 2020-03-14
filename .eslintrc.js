@@ -13,7 +13,9 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-console': 'off',
     'no-new': 'off',
-    'max-len': 'off'
+    'max-len': 'off',
+    'no-lonely-if': 'off',
+    'no-plusplus': 'off'
   },
   parserOptions: {
     parser: 'babel-eslint',
