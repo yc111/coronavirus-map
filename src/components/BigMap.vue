@@ -21,6 +21,7 @@
 import { createNamespacedHelpers } from 'vuex';
 import HeatMapLayer from './maps/HeatMapLayer';
 import dataToGeo from '../utils/data2geo';
+import getCenter from '../utils/getCenter';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoieWMxMTEiLCJhIjoiY2s3MDA2dWt6MWMzcTNkcWF5dmY0azRkMyJ9.1FF9zAxaXYfHScMq6fKKbw';
 const { mapState } = createNamespacedHelpers('situation');
@@ -79,6 +80,14 @@ export default {
   },
   mounted() {
     this.initMap();
+    this.$bus.$on('locate', (addr) => {
+      this.mapInstance.flyTo({
+        center: getCenter(addr),
+        zoom: 3,
+        speed: 1,
+        curve: 2,
+      });
+    });
   },
 };
 </script>
