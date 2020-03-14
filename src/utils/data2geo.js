@@ -70,7 +70,7 @@ function dataToGeo(datas) {
           hasSub = true;
           levelNames.push(name);
           if (!nextPoiList) {
-            console.warn(levelNames, 'has subs', name, 'but we can not get the poi info of next level');
+            // console.warn(levelNames, 'has subs', name, 'but we can not get the poi info of next level');
           } else {
             pushStack(subItem, {
               level: level + 1,
@@ -94,7 +94,7 @@ function dataToGeo(datas) {
         // for debug: print out the unmatched pos
         // @ts-ignore
         // config.isDebug &&
-        console.warn('name is not in the list', level, JSON.stringify(levelNames), name);
+        // console.warn('name is not in the list', level, JSON.stringify(levelNames), name);
       }
       //
       if (pos) {

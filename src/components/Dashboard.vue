@@ -11,31 +11,54 @@
       </div>
     </div>
     <div class='dashboard country'>
-      <div class='data-table'>
-        <table style='width: 100%'>
-          <tr>
-            <!-- 序号国家确诊死亡治愈 -->
-            <th>No.</th>
-            <th>Country</th>
-            <th
-            class='thead-sort'
-            v-for='(item) in typeList'
-            :key='item'
+      <table class='table-header'>
+        <colgroup>
+          <col span='1' class='col-number'>
+          <col span='1' class='col-country'>
+          <col span='1' class='col-confirmed'>
+          <col span='1' class='col-death'>
+          <col span='1' class='col-cured'>
+        </colgroup>
+        <tr>
+          <!-- 序号国家确诊死亡治愈 -->
+          <th>No.</th>
+          <th>Country</th>
+          <th
+          class='thead-sort'
+          v-for='(item) in typeList'
+          :key='item'
+          >
+            {{item | upperCase}}
+            <label
+            class='el-icon-caret-bottom'
+            :class='item === sortType ? "active" : ""'
             >
-              {{item | upperCase}}
-              <label
-               class='el-icon-caret-bottom'
-               :class='item === sortType ? "active" : ""'
-              >
-                <input class='origin-radio' type="radio" v-model='sortType' :value='item'>
-              </label>
-            </th>
-          <tr class='data-row' @click='handleLocate("中国")'>
-            <td>1</td>
-            <td>China</td>
-            <td>80,982</td>
-            <td>3173</td>
-            <td>62917</td>
+              <input class='origin-radio' type="radio" v-model='sortType' :value='item'>
+            </label>
+          </th>
+        </tr>
+      </table>
+
+      <div class='table-body'>
+        <table>
+          <colgroup>
+            <col span='1' class='col-number'>
+            <col span='1' class='col-country'>
+            <col span='1' class='col-confirmed'>
+            <col span='1' class='col-death'>
+            <col span='1' class='col-cured'>
+          </colgroup>
+          <tr
+            class='data-row'
+            v-for='(country, index) in countryData'
+            :key='country.name'
+            @click='handleLocate(country.name)'
+          >
+            <td>{{index + 1}}</td>
+            <td>{{country.name}}</td>
+            <td>{{country.confirmedNum | formatterNum}}</td>
+            <td>{{country.deathsNum | formatterNum}}</td>
+            <td>{{country.curesNum | formatterNum}}</td>
           </tr>
         </table>
       </div>
@@ -57,6 +80,7 @@ export default {
       ],
       sortType: 'confirmed',
       typeList: ['confirmed', 'death', 'cured'],
+      countryData: [],
     };
   },
   filters: {
@@ -80,8 +104,12 @@ export default {
   methods: {
     handleLocate(addr) {
       this.$bus.$emit('locate', addr);
-      console.log('locating');
     },
+  },
+  mounted() {
+    this.$bus.$on('updateList', (data) => {
+      this.countryData = data;
+    });
   },
 };
 
@@ -96,7 +124,7 @@ export default {
   box-sizing: border-box;
 
 .dashboard
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.5);
   margin-bottom: 10px;
 
 .dashboard.total
@@ -109,7 +137,7 @@ export default {
 
 .dashboard.country
   text-align: left;
-  height: 500px;
+  padding: 10px 20px;
 
 .division
   padding: 0 10px;
@@ -119,16 +147,18 @@ export default {
   padding-left: 3px;
   cursor: pointer;
 
-.data-table
-  padding: 10px 20px;
+.table-body
+  height: 400px;
+  overflow: auto;
 
-.data-table table
-  border-collapse: collapse;
+  table
+    border-collapse: collapse;
+    font-size: 14px;
 
-.data-table th
-  padding-right: 10px;
+.table-header
+  width: 100%;
   font-size: 12px;
-  line-height: 20px;
+  line-height: 30px;
 
 .thead-sort label
   color: rgba(0,0,0,0.2)
@@ -147,13 +177,18 @@ export default {
 .data-row:hover
   background: rgba(255,255,255,0.3);
 
-.statictics-title
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-content: center;
-  padding: 10px 20px;
-  background: rgba(255,255,255,0.3);
+.col-number
+ width: 40px;
+
+.col-country
+ width: 110px;
+
+.col-confirmed
+  width: 100px;
+
+.col-death,
+.col-cured
+  width: 80px;
 
 .origin-radio
   opacity: 0;
