@@ -115,7 +115,7 @@ export default {
 <style lang="stylus" scoped>
 .dashboard-wrapper
   position: fixed;
-  top: 50px;
+  top: 110px;
   right: 10px;
   z-index: 9;
   width: 400px;

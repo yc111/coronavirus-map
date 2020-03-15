@@ -30,9 +30,10 @@ import { createNamespacedHelpers } from 'vuex';
 import HeatMapLayer from './maps/HeatMapLayer';
 import dataToGeo from '../utils/data2geo';
 import getCenter from '../utils/getCenter';
+import * as types from '../store/actions-type';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoieWMxMTEiLCJhIjoiY2s3MDA2dWt6MWMzcTNkcWF5dmY0azRkMyJ9.1FF9zAxaXYfHScMq6fKKbw';
-const { mapState } = createNamespacedHelpers('situation');
+const { mapState, mapMutations } = createNamespacedHelpers('situation');
 const MAP_INIT_CENTER = [106.90, 38.39];
 const MAP_INIT_ZOOM = 1;
 
@@ -43,11 +44,10 @@ export default {
     return {
       style: { width: '100%', height: `${window.innerHeight}px` },
       layerInstance: {},
-      mapOnLoad: false,
     };
   },
   computed: {
-    ...mapState(['worldData']),
+    ...mapState(['worldData', 'mapOnLoad']),
     mapInstance() {
       return new this.$mapbox.Map({
         container: 'big_map',
@@ -65,10 +65,11 @@ export default {
     },
   },
   methods: {
+    ...mapMutations([types.SET_MAPONLOAD]),
     initMap() {
       this.$mapbox.accessToken = MAPBOX_TOKEN;
       this.mapInstance.on('load', () => {
-        this.mapOnLoad = true;
+        this[types.SET_MAPONLOAD](true);
         this.layerInstance.HeatMapLayer = new HeatMapLayer(this.mapInstance, dataToGeo(this.worldData).leafRootGeoJoin);
         // console.log(this.mapInstance.getStyle().layers);
       });

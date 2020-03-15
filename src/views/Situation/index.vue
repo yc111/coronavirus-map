@@ -1,5 +1,6 @@
 <template>
     <div>
+      <Timeline/>
       <Dashboard/>
     </div>
 </template>
@@ -9,6 +10,8 @@
 import { createNamespacedHelpers } from 'vuex';
 import * as types from '../../store/actions-type';
 import Dashboard from '../../components/Dashboard.vue';
+import Timeline from '../../components/Timeline.vue';
+import { getCurentDate } from '../../utils/dateHandle';
 
 const { mapActions } = createNamespacedHelpers('situation');
 export default {
@@ -16,12 +19,13 @@ export default {
 
   components: {
     Dashboard,
+    Timeline,
   },
   methods: {
     ...mapActions([types.SET_WORLDDATA]),
   },
   mounted() {
-    this[types.SET_WORLDDATA]('2020-03-14');
+    this[types.SET_WORLDDATA](getCurentDate());
   },
 };
 </script>
