@@ -9,6 +9,8 @@ export default {
     worldData: {},
     worldDataList: [],
     globalTotal: {},
+    currentDate: '',
+    mapOnLoad: false,
   },
   mutations: {
     [types.SET_PROVINCEDATA](state, payload) {
@@ -22,6 +24,12 @@ export default {
     },
     [types.SET_GLOBALTOTAL](state, payload) {
       state.globalTotal = payload;
+    },
+    [types.SET_CURRENTDATE](state, payload) {
+      state.currentDate = payload;
+    },
+    [types.SET_MAPONLOAD](state, payload) {
+      state.mapOnLoad = payload;
     },
   },
   actions: {
@@ -37,6 +45,7 @@ export default {
       commit(types.SET_WORLDDATA, data.data);
       commit(types.SET_WORLDDATALIST, getGlobalData(data.data).list);
       commit(types.SET_GLOBALTOTAL, getGlobalData(data.data).globalTotal);
+      commit(types.SET_CURRENTDATE, args);
     },
   },
 };
