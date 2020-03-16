@@ -230,6 +230,8 @@ export default {
   .dashboard-wrapper
     width: 100%;
     right: 0;
+  .dashboard.total
+    height: auto;
 
 .data-cell
   display: flex;
