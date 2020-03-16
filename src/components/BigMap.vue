@@ -1,5 +1,14 @@
 <template>
   <div>
+    <el-switch
+      title='Dashboard control'
+      style='display: block; position:fixed; right: 90px; top: 15px; z-index: 9'
+      v-model='showDashBoard'
+      active-color='rgba(80,100,120,0.8)'
+      inactive-color='rgba(80,100,120,0.2)'
+      @change='handleSwitchChange'
+    >
+    </el-switch>
       <el-button
       title='reset map'
       icon='el-icon-refresh-left'
@@ -44,6 +53,7 @@ export default {
     return {
       style: { width: '100%', height: `${window.innerHeight}px` },
       layerInstance: {},
+      showDashBoard: true,
     };
   },
   computed: {
@@ -70,13 +80,13 @@ export default {
       this.$mapbox.accessToken = MAPBOX_TOKEN;
       this.mapInstance.on('load', () => {
         this[types.SET_MAPONLOAD](true);
-        this.layerInstance.HeatMapLayer = new HeatMapLayer(this.mapInstance, dataToGeo(this.worldData).leafRootGeoJoin);
+        this.layerInstance.HeatMapLayer = new HeatMapLayer(this.mapInstance, dataToGeo(this.worldData).leafRootGeo);
         // console.log(this.mapInstance.getStyle().layers);
       });
     },
     updateMap(data) {
       if (this.layerInstance.HeatMapLayer) {
-        this.layerInstance.HeatMapLayer.update(dataToGeo(data).leafRootGeoJoin);
+        this.layerInstance.HeatMapLayer.update(dataToGeo(data).leafRootGeo);
       }
     },
     handleReset() {
@@ -91,6 +101,9 @@ export default {
       if (el) {
         el.parentNode.removeChild(el);
       }
+    },
+    handleSwitchChange(val) {
+      this.$bus.$emit('displayControl', val);
     },
     showMarker(poi) {
       let el = document.querySelector('#marker');

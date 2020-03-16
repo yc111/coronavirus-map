@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       type: 'situation',
-      isShow: true,
+      isShow: false,
     };
   },
   methods: {

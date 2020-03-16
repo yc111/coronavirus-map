@@ -10,7 +10,10 @@
         <span class='num-title'>Total {{item | upperCase}}</span>
       </div>
     </div>
-    <div class='dashboard country'>
+    <div
+      class='dashboard country'
+      v-if='isShow'
+    >
       <table class='table-header'>
         <colgroup>
           <col span='1' class='col-number'>
@@ -78,6 +81,7 @@ export default {
       sortType: 'confirmed',
       typeList: ['confirmed', 'death', 'cured'],
       countryData: [],
+      isShow: true,
     };
   },
   filters: {
@@ -108,6 +112,11 @@ export default {
     handleLocate(addr) {
       this.$bus.$emit('locate', addr);
     },
+  },
+  mounted() {
+    this.$bus.$on('displayControl', (val) => {
+      this.isShow = val;
+    });
   },
 };
 
