@@ -4,5 +4,6 @@ export const SET_WORLDDATALIST = 'SET_WORLDDATALIST';
 export const SET_GLOBALTOTAL = 'SET_GLOBALTOTAL';
 export const SET_CURRENTDATE = 'SET_CURRENTDATE';
 export const SET_MAPONLOAD = 'SET_MAPONLOAD';
+export const SORT_MAPONLOAD = 'SORT_MAPONLOAD';
 
 export default {};

@@ -40,4 +40,15 @@ export function getGlobalData(data) {
   return { globalTotal, list };
 }
 
+export function sortGlobalData(list, key) {
+  let newkey = 'confirmedNum';
+  if (key === 'death') {
+    newkey = 'deathsNum';
+  } else if (key === 'cured') {
+    newkey = 'curesNum';
+  }
+  const newList = list.sort((a, b) => b[newkey] - a[newkey]);
+  return newList;
+}
+
 export default {};

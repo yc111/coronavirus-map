@@ -1,6 +1,6 @@
 import { fetchData, fetchAssets, fetchWorldData } from '@/api';
 import * as types from '../actions-type';
-import { getGlobalData } from '../../utils/getGlobalData';
+import { getGlobalData, sortGlobalData } from '../../utils/getGlobalData';
 
 const dataCache = [];
 
@@ -62,6 +62,9 @@ export default {
       commit(types.SET_WORLDDATALIST, dataCache[args].worldDataList);
       commit(types.SET_GLOBALTOTAL, dataCache[args].globalTotal);
       commit(types.SET_CURRENTDATE, args);
+    },
+    [types.SORT_MAPONLOAD]({ state, commit }, args) {
+      commit(types.SET_WORLDDATALIST, sortGlobalData(state.worldDataList, args));
     },
   },
 };

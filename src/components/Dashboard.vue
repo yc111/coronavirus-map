@@ -35,6 +35,7 @@
             <label
             class='el-icon-caret-bottom'
             :class='item === sortType ? "active" : ""'
+            @click='handleSort(item)'
             >
               <input class='origin-radio' type="radio" v-model='sortType' :value='item'>
             </label>
@@ -71,8 +72,9 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
+import * as types from '../store/actions-type';
 
-const { mapState } = createNamespacedHelpers('situation');
+const { mapState, mapActions } = createNamespacedHelpers('situation');
 export default {
   name: 'dashboard',
 
@@ -109,8 +111,12 @@ export default {
     ...mapState(['worldDataList', 'globalTotal']),
   },
   methods: {
+    ...mapActions([types.SORT_MAPONLOAD]),
     handleLocate(addr) {
       this.$bus.$emit('locate', addr);
+    },
+    handleSort(val) {
+      this[types.SORT_MAPONLOAD](val);
     },
   },
   mounted() {
