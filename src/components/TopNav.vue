@@ -1,8 +1,8 @@
 <template>
     <div class='switch-button' v-if='isShow'>
         <el-radio-group v-model="type" size="mini" @change='handleSwitch'>
-        <el-radio-button label="situation">MAP</el-radio-button>
-        <el-radio-button label="statistics">CHART</el-radio-button>
+          <el-radio-button label="situation">MAP</el-radio-button>
+          <el-radio-button label="statistics">CHART</el-radio-button>
         </el-radio-group>
     </div>
 </template>

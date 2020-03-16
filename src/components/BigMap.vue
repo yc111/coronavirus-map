@@ -1,5 +1,15 @@
 <template>
   <div>
+    <el-radio-group
+      v-model='themeStyle'
+      size='mini'
+      class='theme-control'
+      fill='rgba(80,100,120,0.8)'
+      @change='handleThemeChange'
+    >
+      <el-radio-button label='bright'>Bright</el-radio-button>
+      <el-radio-button label='dark'>Dark</el-radio-button>
+    </el-radio-group>
     <el-switch
       title='Dashboard control'
       style='display: block; position:fixed; right: 90px; top: 15px; z-index: 9'
@@ -54,16 +64,21 @@ export default {
       style: { width: '100%', height: `${window.innerHeight}px` },
       layerInstance: {},
       showDashBoard: true,
+      themeStyle: 'bright',
     };
   },
   computed: {
     ...mapState(['worldData', 'mapOnLoad']),
     mapInstance() {
+      let id = 'streets-v11';
+      if (this.themeStyle === 'dark') {
+        id = 'dark-v10';
+      }
       return new this.$mapbox.Map({
         container: 'big_map',
         center: MAP_INIT_CENTER,
         zoom: MAP_INIT_ZOOM,
-        style: 'mapbox://styles/mapbox/streets-v11',
+        style: `mapbox://styles/mapbox/${id}`,
       });
     },
   },
@@ -104,6 +119,10 @@ export default {
     },
     handleSwitchChange(val) {
       this.$bus.$emit('displayControl', val);
+    },
+    handleThemeChange(val) {
+      this.$bus.$emit('themeChange', val);
+      this.initMap();
     },
     showMarker(poi) {
       let el = document.querySelector('#marker');
@@ -147,4 +166,16 @@ export default {
 <style scoped lang='stylus'>
 .big-map
   position: fixed;
+
+.theme-control
+  display: block;
+  position: fixed;
+  top: 10px;
+  right: 287px;
+  z-index: 9;
+
+@media (max-width: 719px)
+  .theme-control
+    display: none;
+
 </style>
