@@ -12,35 +12,54 @@
     </el-radio-group>
     <el-switch
       title='Dashboard control'
-      style='display: block; position:fixed; right: 90px; top: 15px; z-index: 9'
+      class='dashboard-control-btn'
       v-model='showDashBoard'
       active-color='rgba(80,100,120,0.8)'
       inactive-color='rgba(80,100,120,0.2)'
       @change='handleSwitchChange'
     >
     </el-switch>
-      <el-button
+    <el-button
       title='reset map'
       icon='el-icon-refresh-left'
       circle
       size='mini'
       style='position:fixed; right: 10px; top: 10px; z-index: 9'
       @click='handleReset'
-      ></el-button>
-      <el-button
+    ></el-button>
+    <el-button
       title='clear marker'
       icon='el-icon-brush'
       circle
       size='mini'
       style='position:fixed; right: 50px; top: 10px; z-index: 9'
       @click='handleClear'
-      ></el-button>
-      <div
+    ></el-button>
+    <div class='mode-btn'>
+      <el-button
+        title='go dark mode'
+        icon='el-icon-moon'
+        circle
+        size='mini'
+        v-if='themeStyle==="bright"'
+        @click='changeMode("dark")'
+      >
+      </el-button>
+      <el-button
+        title='go light mode'
+        icon='el-icon-sunny'
+        circle
+        size='mini'
+        v-if='themeStyle==="dark"'
+        @click='changeMode("bright")'
+      >
+      </el-button>
+    </div>
+    <div
         class='big-map'
         id='big_map'
         :style='style'
-      >
-      </div>
+    ></div>
   </div>
 </template>
 
@@ -91,11 +110,14 @@ export default {
   },
   methods: {
     ...mapMutations([types.SET_MAPONLOAD]),
-    initMap() {
+    initMap(cb) {
       this.$mapbox.accessToken = MAPBOX_TOKEN;
       this.mapInstance.on('load', () => {
         this[types.SET_MAPONLOAD](true);
         this.layerInstance.HeatMapLayer = new HeatMapLayer(this.mapInstance, dataToGeo(this.worldData).leafRootGeo);
+        if (cb) {
+          cb();
+        }
         // console.log(this.mapInstance.getStyle().layers);
       });
     },
@@ -121,8 +143,13 @@ export default {
       this.$bus.$emit('displayControl', val);
     },
     handleThemeChange(val) {
-      this.$bus.$emit('themeChange', val);
-      this.initMap();
+      this.initMap(() => {
+        this.$bus.$emit('themeChange', val);
+      });
+    },
+    changeMode(val) {
+      this.themeStyle = val;
+      this.handleThemeChange(val);
     },
     showMarker(poi) {
       let el = document.querySelector('#marker');
@@ -174,8 +201,29 @@ export default {
   right: 287px;
   z-index: 9;
 
+.dashboard-control-btn
+  display: block;
+  position:fixed;
+  right: 90px;
+  top: 15px;
+  z-index: 9;
+
+.mode-btn
+  display: none;
+  position: fixed;
+  right: 95px;
+  top: 10px;
+  z-index: 9;
+
 @media (max-width: 719px)
+  .mode-btn
+    display: block;
+
   .theme-control
     display: none;
+
+  .dashboard-control-btn
+    right: 140px;
+
 
 </style>

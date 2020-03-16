@@ -32,11 +32,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
-*
-  margin: 0
-  padding: 0
-
+<style lang="stylus" scoped>
 #app
   font-family 'Avenir', Helvetica, Arial, sans-serif
   -webkit-font-smoothing antialiased
@@ -47,7 +43,7 @@ export default {
 .header
   position: fixed;
   line-height: 60px;
-  z-index: 9;
+  z-index: 11;
 
 .aside
   position: fixed;
@@ -69,21 +65,5 @@ export default {
   z-index: 9;
   margin-left: -12px;
   font-size: 12px;
-
-@media (max-width:719px) {
-  .app-title {
-    font-size: 18px
-    font-weight: 800
-    margin-left: 10px
-  }
-
-  .logo {
-    display: none
-  }
-
-  .sidebar-button {
-      display: inline-block;
-  }
-}
 
 </style>
