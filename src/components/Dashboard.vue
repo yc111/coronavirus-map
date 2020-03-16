@@ -40,7 +40,7 @@
       </table>
 
       <div class='table-body'>
-        <table>
+        <table width=100%>
           <colgroup>
             <col span='1' class='col-number'>
             <col span='1' class='col-country'>

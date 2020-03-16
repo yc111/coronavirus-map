@@ -2,6 +2,8 @@ import { fetchData, fetchAssets, fetchWorldData } from '@/api';
 import * as types from '../actions-type';
 import { getGlobalData } from '../../utils/getGlobalData';
 
+const dataCache = [];
+
 export default {
   namespaced: true,
   state: {
@@ -34,17 +36,31 @@ export default {
   },
   actions: {
     async [types.SET_PROVINCEDATA]({ commit }, args) {
-      let data = await fetchData(args);
-      if (!data || data === -1) {
-        data = await fetchAssets(`${args}.json`);
+      if (!dataCache[args]) {
+        dataCache[args] = {};
+        if (!dataCache[args].provinceData) {
+          let data = await fetchData(args);
+          if (!data || data === -1) {
+            data = await fetchAssets(`${args}.json`);
+          }
+          dataCache[args].provinceData = data.data;
+        }
       }
-      commit(types.SET_PROVINCEDATA, data ? data.data : {});
+      commit(types.SET_PROVINCEDATA, dataCache[args].provinceData);
     },
     async [types.SET_WORLDDATA]({ commit }, args) {
-      const data = await fetchWorldData(args);
-      commit(types.SET_WORLDDATA, data.data);
-      commit(types.SET_WORLDDATALIST, getGlobalData(data.data).list);
-      commit(types.SET_GLOBALTOTAL, getGlobalData(data.data).globalTotal);
+      if (!dataCache[args]) {
+        dataCache[args] = {};
+        if (!dataCache[args].worldData) {
+          const data = await fetchWorldData(args);
+          dataCache[args].worldData = data.data;
+          dataCache[args].worldDataList = getGlobalData(dataCache[args].worldData).list;
+          dataCache[args].globalTotal = getGlobalData(dataCache[args].worldData).globalTotal;
+        }
+      }
+      commit(types.SET_WORLDDATA, dataCache[args].worldData);
+      commit(types.SET_WORLDDATALIST, dataCache[args].worldDataList);
+      commit(types.SET_GLOBALTOTAL, dataCache[args].globalTotal);
       commit(types.SET_CURRENTDATE, args);
     },
   },
