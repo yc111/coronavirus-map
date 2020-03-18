@@ -7,6 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import './plugins/element';
 import './plugins/echarts';
 import './theme/index.css';
+import './plugins/base';
 
 Vue.prototype.$mapbox = mapboxgl;
 Vue.prototype.$bus = new Vue();

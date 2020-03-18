@@ -104,6 +104,8 @@ class HeatMapLayer {
       ],
     };
 
+    // this.map.setPaintProperty('water', 'fill-color', '#206396');
+
     this.map.addSource('world-geo', {
       type: 'geojson',
       data,

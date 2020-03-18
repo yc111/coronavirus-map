@@ -7,11 +7,15 @@
       fill='rgba(80,100,120,0.8)'
       @change='handleThemeChange'
     >
-      <el-radio-button label='bright'>Bright</el-radio-button>
-      <el-radio-button label='dark'>Dark</el-radio-button>
+      <el-radio-button label='bright'>
+        <lan en='Bright' cn='白天'></lan>
+      </el-radio-button>
+      <el-radio-button label='dark'>
+        <lan en='Dark' cn='夜晚'></lan>
+      </el-radio-button>
     </el-radio-group>
     <el-switch
-      title='Dashboard control'
+      :title='language === "Chinese" ? "面板控制" : "Dashboard control"'
       class='dashboard-control-btn'
       v-model='showDashBoard'
       active-color='rgba(80,100,120,0.8)'
@@ -20,24 +24,25 @@
     >
     </el-switch>
     <el-button
-      title='reset map'
+      ref='resetBtn'
+      :title='language === "Chinese" ? "重置地图" : "reset map"'
+      class='reset-map-btn'
       icon='el-icon-refresh-left'
       circle
       size='mini'
-      style='position:fixed; right: 10px; top: 10px; z-index: 9'
       @click='handleReset'
     ></el-button>
     <el-button
-      title='clear marker'
+      ref='clearBtn'
+      :title='language === "Chinese" ? "清除标记" : "clear marker"'
+      class='clear-marker-btn'
       icon='el-icon-brush'
       circle
       size='mini'
-      style='position:fixed; right: 50px; top: 10px; z-index: 9'
       @click='handleClear'
     ></el-button>
     <div class='mode-btn'>
       <el-button
-        title='go dark mode'
         icon='el-icon-moon'
         circle
         size='mini'
@@ -46,13 +51,32 @@
       >
       </el-button>
       <el-button
-        title='go light mode'
         icon='el-icon-sunny'
         circle
         size='mini'
         v-if='themeStyle==="dark"'
         @click='changeMode("bright")'
       >
+      </el-button>
+    </div>
+    <div class='lang-btn'>
+      <el-button
+        title='Chinese'
+        circle
+        size='mini'
+        v-if='language==="English"'
+        @click='changeLanguage("Chinese")'
+      >
+      <span class='btn-text'>中</span>
+      </el-button>
+      <el-button
+        title='英文'
+        circle
+        size='mini'
+        v-if='language==="Chinese"'
+        @click='changeLanguage("English")'
+      >
+      <span class='btn-text'>EN</span>
       </el-button>
     </div>
     <div
@@ -87,7 +111,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['worldData', 'mapOnLoad']),
+    ...mapState(['worldData', 'mapOnLoad', 'language']),
     mapInstance() {
       let id = 'streets-v11';
       if (this.themeStyle === 'dark') {
@@ -109,7 +133,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations([types.SET_MAPONLOAD]),
+    ...mapMutations([types.SET_MAPONLOAD, types.SET_LANGUAGE]),
     initMap(cb) {
       this.$mapbox.accessToken = MAPBOX_TOKEN;
       this.mapInstance.on('load', () => {
@@ -150,6 +174,9 @@ export default {
     changeMode(val) {
       this.themeStyle = val;
       this.handleThemeChange(val);
+    },
+    changeLanguage(val) {
+      this[types.SET_LANGUAGE](val);
     },
     showMarker(poi) {
       let el = document.querySelector('#marker');
@@ -204,14 +231,34 @@ export default {
 .dashboard-control-btn
   display: block;
   position:fixed;
-  right: 90px;
+  right: 125px;
   top: 15px;
   z-index: 9;
 
 .mode-btn
   display: none;
   position: fixed;
-  right: 95px;
+  right: 120px;
+  top: 10px;
+  z-index: 9;
+
+.lang-btn
+  position: fixed;
+  right: 80px;
+  top: 10px;
+  z-index: 9;
+  .btn-text
+    font-weight: 200;
+
+.clear-marker-btn
+   position: fixed;
+   right: 45px;
+   top: 10px;
+   z-index: 9;
+
+.reset-map-btn
+  position: fixed;
+  right: 10px;
   top: 10px;
   z-index: 9;
 
@@ -223,7 +270,7 @@ export default {
     display: none;
 
   .dashboard-control-btn
-    right: 140px;
+    right: 155px;
 
 
 </style>

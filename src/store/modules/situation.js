@@ -13,6 +13,7 @@ export default {
     globalTotal: {},
     currentDate: '',
     mapOnLoad: false,
+    language: 'Chinese',
   },
   mutations: {
     [types.SET_PROVINCEDATA](state, payload) {
@@ -32,6 +33,9 @@ export default {
     },
     [types.SET_MAPONLOAD](state, payload) {
       state.mapOnLoad = payload;
+    },
+    [types.SET_LANGUAGE](state, payload) {
+      state.language = payload || 'Chinese';
     },
   },
   actions: {
@@ -63,7 +67,7 @@ export default {
       commit(types.SET_GLOBALTOTAL, dataCache[args].globalTotal);
       commit(types.SET_CURRENTDATE, args);
     },
-    [types.SORT_MAPONLOAD]({ state, commit }, args) {
+    [types.SORT_WORLDDATA]({ state, commit }, args) {
       commit(types.SET_WORLDDATALIST, sortGlobalData(state.worldDataList, args));
     },
   },

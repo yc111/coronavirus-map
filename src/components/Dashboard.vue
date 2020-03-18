@@ -7,7 +7,9 @@
         :key='item'
       >
         <span class='num' :class='item'>{{globalTotal[item] | formatterNum}}</span>
-        <span class='num-title'>Total {{item | upperCase}}</span>
+        <span class='num-title'>
+          <lan :en="'Total ' + item | upperCase" :cn="item | toChinese"></lan>
+        </span>
       </div>
     </div>
     <div
@@ -23,15 +25,14 @@
           <col span='1' class='col-cured'>
         </colgroup>
         <tr>
-          <!-- 序号国家确诊死亡治愈 -->
-          <th>No.</th>
-          <th>Country</th>
+          <th><lan en='No.' cn='序号'></lan></th>
+          <th><lan en='Country' cn='国家'></lan></th>
           <th
           class='thead-sort'
-          v-for='(item) in typeList'
+          v-for='(item, index) in typeList'
           :key='item'
           >
-            {{item | upperCase}}
+          <lan :en='item | upperCase' :cn='typeListCN[index]'></lan>
             <label
             class='el-icon-caret-bottom'
             :class='item === sortType ? "active" : ""'
@@ -59,7 +60,9 @@
             @click='handleLocate(country.name)'
           >
             <td>{{index + 1}}</td>
-            <td>{{country.name}}</td>
+            <td>
+              <lan :en='countries[country.name] || country.name' :cn='country.name'></lan>
+            </td>
             <td class='column-confirmed'>{{country.confirmedNum | formatterNum}}</td>
             <td class='column-deaths'>{{country.deathsNum | formatterNum}}</td>
             <td class='column-cures'>{{country.curesNum | formatterNum}}</td>
@@ -73,6 +76,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import * as types from '../store/actions-type';
+import countries from '../assets/counties';
 
 const { mapState, mapActions } = createNamespacedHelpers('situation');
 export default {
@@ -82,6 +86,7 @@ export default {
     return {
       sortType: 'confirmed',
       typeList: ['confirmed', 'death', 'cured'],
+      typeListCN: ['确诊', '死亡', '治愈'],
       countryData: [],
       isShow: true,
     };
@@ -106,17 +111,28 @@ export default {
       newStr = str.slice(0, 1).toUpperCase().concat(str.slice(1));
       return newStr;
     },
+    toChinese(str) {
+      const pool = {
+        confirmed: '累计确诊',
+        death: '累计死亡',
+        cured: '累计治愈',
+      };
+      return pool[str];
+    },
   },
   computed: {
     ...mapState(['worldDataList', 'globalTotal']),
+    countries() {
+      return countries;
+    },
   },
   methods: {
-    ...mapActions([types.SORT_MAPONLOAD]),
+    ...mapActions([types.SORT_WORLDDATA]),
     handleLocate(addr) {
       this.$bus.$emit('locate', addr);
     },
     handleSort(val) {
-      this[types.SORT_MAPONLOAD](val);
+      this[types.SORT_WORLDDATA](val);
     },
   },
   mounted() {

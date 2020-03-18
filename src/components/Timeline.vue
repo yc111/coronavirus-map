@@ -3,27 +3,27 @@
     <span class='date'>{{currentDate}}</span>
     <div class='control-bar'>
       <button
-        title='prev'
+        :title='language === "Chinese" ? "前一天" : "prev"'
         class='bar-item el-icon-arrow-left'
         :class='this.index <= 0 ? "disabled" : ""'
         :disabled='this.index <= 0'
         @click='handlePrev'
       ></button>
       <button
-        title='play'
+        :title='language === "Chinese" ? "播放" : "play"'
         class='bar-item el-icon-video-play'
         v-if='!isPlaying'
         @click='handlePlay'
       ></button>
       <button
-        title='pause'
+        :title='language === "Chinese" ? "暂停" : "pause"'
         class='bar-item el-icon-video-pause'
         :class='isPlaying ? "pause" : ""'
         v-else
         @click='handlePause'
       ></button>
       <button
-        title='next'
+        :title='language === "Chinese" ? "后一天" : "next"'
         class='bar-item next-btn el-icon-arrow-right'
         :class='this.index >= dates.length - 1 ? "disabled" : ""'
         :disabled='this.index >= dates.length - 1'
@@ -60,7 +60,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['mapOnLoad', 'currentDate']),
+    ...mapState(['mapOnLoad', 'currentDate', 'language']),
     dates() {
       return getDates('2020-01-21');
     },
