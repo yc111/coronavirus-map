@@ -34,7 +34,7 @@
       <span
         v-for='(date, timeindex) in dates'
         :key='date'
-        :style='{left:timeindex * 7 + "px"}'
+        :style='{left:(400 / dates.length) * timeindex + "px"}'
         :title='date'
         :class='timeindex === index ? "active" : ""'
         @click='handleTimelineChange(timeindex)'
