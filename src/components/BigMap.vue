@@ -8,14 +8,14 @@
       @change='handleThemeChange'
     >
       <el-radio-button label='bright'>
-        <lan en='Bright' cn='白天'></lan>
+        <lan en='Bright' zh='白天'></lan>
       </el-radio-button>
       <el-radio-button label='dark'>
-        <lan en='Dark' cn='夜晚'></lan>
+        <lan en='Dark' zh='夜晚'></lan>
       </el-radio-button>
     </el-radio-group>
     <el-switch
-      :title='language === "Chinese" ? "面板控制" : "Dashboard control"'
+      :title='language === "zh" ? "面板控制" : "Dashboard control"'
       class='dashboard-control-btn'
       v-model='showDashBoard'
       active-color='rgba(80,100,120,0.8)'
@@ -25,7 +25,7 @@
     </el-switch>
     <el-button
       ref='resetBtn'
-      :title='language === "Chinese" ? "重置地图" : "reset map"'
+      :title='language === "zh" ? "重置地图" : "reset map"'
       class='reset-map-btn'
       icon='el-icon-refresh-left'
       circle
@@ -34,7 +34,7 @@
     ></el-button>
     <el-button
       ref='clearBtn'
-      :title='language === "Chinese" ? "清除标记" : "clear marker"'
+      :title='language === "zh" ? "清除标记" : "clear marker"'
       class='clear-marker-btn'
       icon='el-icon-brush'
       circle
@@ -64,8 +64,8 @@
         title='Chinese'
         circle
         size='mini'
-        v-if='language==="English"'
-        @click='changeLanguage("Chinese")'
+        v-if='language==="en"'
+        @click='changeLanguage("zh")'
       >
       <span class='btn-text'>中</span>
       </el-button>
@@ -73,8 +73,8 @@
         title='英文'
         circle
         size='mini'
-        v-if='language==="Chinese"'
-        @click='changeLanguage("English")'
+        v-if='language==="zh"'
+        @click='changeLanguage("en")'
       >
       <span class='btn-text'>EN</span>
       </el-button>
@@ -89,6 +89,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
+import MapboxLanguage from '@mapbox/mapbox-gl-language';
 import HeatMapLayer from './maps/HeatMapLayer';
 import dataToGeo from '../utils/data2geo';
 import getCenter from '../utils/getCenter';
@@ -113,9 +114,9 @@ export default {
   computed: {
     ...mapState(['worldData', 'mapOnLoad', 'language']),
     mapInstance() {
-      let id = 'streets-v11';
+      let id = 'streets-v10';
       if (this.themeStyle === 'dark') {
-        id = 'dark-v10';
+        id = 'dark-v9';
       }
       return new this.$mapbox.Map({
         container: 'big_map',
@@ -136,6 +137,10 @@ export default {
     ...mapMutations([types.SET_MAPONLOAD, types.SET_LANGUAGE]),
     initMap(cb) {
       this.$mapbox.accessToken = MAPBOX_TOKEN;
+      this.mapLan = new MapboxLanguage({
+        defaultLanguage: this.language,
+      });
+      this.mapInstance.addControl(this.mapLan);
       this.mapInstance.on('load', () => {
         this[types.SET_MAPONLOAD](true);
         this.layerInstance.HeatMapLayer = new HeatMapLayer(this.mapInstance, dataToGeo(this.worldData).leafRootGeo);
@@ -177,6 +182,8 @@ export default {
     },
     changeLanguage(val) {
       this[types.SET_LANGUAGE](val);
+      const layer = this.mapLan.setLanguage(this.mapInstance.getStyle(), val);
+      this.mapInstance.setStyle(layer, { diff: true });
     },
     showMarker(poi) {
       let el = document.querySelector('#marker');

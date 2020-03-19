@@ -3,27 +3,27 @@
     <span class='date'>{{currentDate}}</span>
     <div class='control-bar'>
       <button
-        :title='language === "Chinese" ? "前一天" : "prev"'
+        :title='language === "zh" ? "前一天" : "prev"'
         class='bar-item el-icon-arrow-left'
         :class='this.index <= 0 ? "disabled" : ""'
         :disabled='this.index <= 0'
         @click='handlePrev'
       ></button>
       <button
-        :title='language === "Chinese" ? "播放" : "play"'
+        :title='language === "zh" ? "播放" : "play"'
         class='bar-item el-icon-video-play'
         v-if='!isPlaying'
         @click='handlePlay'
       ></button>
       <button
-        :title='language === "Chinese" ? "暂停" : "pause"'
+        :title='language === "zh" ? "暂停" : "pause"'
         class='bar-item el-icon-video-pause'
         :class='isPlaying ? "pause" : ""'
         v-else
         @click='handlePause'
       ></button>
       <button
-        :title='language === "Chinese" ? "后一天" : "next"'
+        :title='language === "zh" ? "后一天" : "next"'
         class='bar-item next-btn el-icon-arrow-right'
         :class='this.index >= dates.length - 1 ? "disabled" : ""'
         :disabled='this.index >= dates.length - 1'

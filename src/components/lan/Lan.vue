@@ -1,5 +1,5 @@
 <template>
-    <span>{{language === "English" ? en : cn}}</span>
+    <span>{{language === "en" ? en : zh}}</span>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ const { mapState } = createNamespacedHelpers('situation');
 export default {
   name: 'lan',
 
-  props: ['cn', 'en'],
+  props: ['zh', 'en'],
 
   computed: {
     ...mapState(['language']),

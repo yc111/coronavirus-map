@@ -13,7 +13,7 @@ export default {
     globalTotal: {},
     currentDate: '',
     mapOnLoad: false,
-    language: 'Chinese',
+    language: 'zh',
   },
   mutations: {
     [types.SET_PROVINCEDATA](state, payload) {
@@ -35,7 +35,7 @@ export default {
       state.mapOnLoad = payload;
     },
     [types.SET_LANGUAGE](state, payload) {
-      state.language = payload || 'Chinese';
+      state.language = payload || 'zh';
     },
   },
   actions: {

@@ -8,7 +8,7 @@
       >
         <span class='num' :class='item'>{{globalTotal[item] | formatterNum}}</span>
         <span class='num-title'>
-          <lan :en="'Total ' + item | upperCase" :cn="item | toChinese"></lan>
+          <lan :en="'Total ' + item | upperCase" :zh="item | toZh"></lan>
         </span>
       </div>
     </div>
@@ -25,14 +25,14 @@
           <col span='1' class='col-cured'>
         </colgroup>
         <tr>
-          <th><lan en='No.' cn='序号'></lan></th>
-          <th><lan en='Country' cn='国家'></lan></th>
+          <th><lan en='No.' zh='序号'></lan></th>
+          <th><lan en='Country' zh='国家'></lan></th>
           <th
           class='thead-sort'
           v-for='(item, index) in typeList'
           :key='item'
           >
-          <lan :en='item | upperCase' :cn='typeListCN[index]'></lan>
+          <lan :en='item | upperCase' :zh='typeListCN[index]'></lan>
             <label
             class='el-icon-caret-bottom'
             :class='item === sortType ? "active" : ""'
@@ -61,7 +61,7 @@
           >
             <td>{{index + 1}}</td>
             <td>
-              <lan :en='countries[country.name] || country.name' :cn='country.name'></lan>
+              <lan :en='countries[country.name] || country.name' :zh='country.name'></lan>
             </td>
             <td class='column-confirmed'>{{country.confirmedNum | formatterNum}}</td>
             <td class='column-deaths'>{{country.deathsNum | formatterNum}}</td>
@@ -111,7 +111,7 @@ export default {
       newStr = str.slice(0, 1).toUpperCase().concat(str.slice(1));
       return newStr;
     },
-    toChinese(str) {
+    toZh(str) {
       const pool = {
         confirmed: '累计确诊',
         death: '累计死亡',
