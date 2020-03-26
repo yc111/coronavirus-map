@@ -256,6 +256,7 @@ export default {
 .num
   font-weight: 800;
   font-size: 30px;
+  letter-spacing: -2px;
 
 .num-title
   font-size: 12px;
