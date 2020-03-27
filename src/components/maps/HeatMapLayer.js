@@ -59,21 +59,27 @@ class HeatMapLayer {
     const circlePaint = {
       'circle-color': 'rgba(200,10,10,0.9)',
       'circle-stroke-color': 'rgba(255,255,255,0.2)',
-      'circle-stroke-width': 3,
+      'circle-stroke-width': [
+        'step',
+        ['zoom'],
+        1,
+        6,
+        3,
+      ],
       'circle-radius': [
         'interpolate',
         ['linear'],
         ['zoom'],
         5,
-        ['interpolate', ['linear'], ['get', 'confirmedNum'], 1, 1, 1000, 30],
+        ['interpolate', ['linear'], ['get', 'confirmedNum'], 1, 5, 1000, 30],
         8,
-        ['interpolate', ['linear'], ['get', 'confirmedNum'], 1, 5, 1000, 150],
+        ['interpolate', ['linear'], ['get', 'confirmedNum'], 1, 15, 1000, 150],
       ],
       'circle-opacity': [
         'interpolate',
         ['linear'],
         ['zoom'],
-        5,
+        4,
         0,
         8,
         1,
@@ -98,8 +104,8 @@ class HeatMapLayer {
       'text-color': [
         'step',
         ['zoom'],
-        '#000',
-        7,
+        '#BB493B',
+        5,
         '#fff',
       ],
     };
@@ -123,7 +129,7 @@ class HeatMapLayer {
       id: 'circle-layer',
       type: 'circle',
       source: 'world-geo',
-      minzoom: 5,
+      minzoom: 4,
       filter: filterExp,
       paint: circlePaint,
     });
@@ -132,7 +138,8 @@ class HeatMapLayer {
       id: 'count-layer',
       type: 'symbol',
       source: 'world-geo',
-      minzoom: 5,
+      minzoom: 4,
+      filter: filterExp,
       layout: textLayout,
       paint: textPaint,
     });
