@@ -1,40 +1,40 @@
 <template>
     <div class='timeline-wrapper'>
-    <span class='date'>{{currentDate}}</span>
     <div class='control-bar'>
       <button
         :title='language === "zh" ? "前一天" : "prev"'
-        class='bar-item el-icon-arrow-left'
+        class='bar-item bar-item-btn el-icon-arrow-left'
         :class='this.index <= 0 ? "disabled" : ""'
         :disabled='this.index <= 0'
         @click='handlePrev'
       ></button>
       <button
         :title='language === "zh" ? "播放" : "play"'
-        class='bar-item el-icon-video-play'
+        class='bar-item bar-item-btn el-icon-video-play'
         v-if='!isPlaying'
         @click='handlePlay'
       ></button>
       <button
         :title='language === "zh" ? "暂停" : "pause"'
-        class='bar-item el-icon-video-pause'
+        class='bar-item bar-item-btn el-icon-video-pause'
         :class='isPlaying ? "pause" : ""'
         v-else
         @click='handlePause'
       ></button>
       <button
         :title='language === "zh" ? "后一天" : "next"'
-        class='bar-item next-btn el-icon-arrow-right'
+        class='bar-item bar-item-btn next-btn el-icon-arrow-right'
         :class='this.index >= dates.length - 1 ? "disabled" : ""'
         :disabled='this.index >= dates.length - 1'
         @click='handleNext'
       ></button>
+    <span class='bar-item bar-item-date'>{{currentDate}}</span>
     </div>
     <div class='time-horizon'>
       <span
         v-for='(date, timeindex) in dates'
         :key='date'
-        :style='{left:(400 / dates.length) * timeindex + "px"}'
+        :style='{left:(1 / dates.length) * timeindex * 100 + "%"}'
         :title='date'
         :class='timeindex === index ? "active" : ""'
         @click='handleTimelineChange(timeindex)'
@@ -133,9 +133,8 @@ export default {
 
 .control-bar
   display: flex;
-  width: 100px;
 
-.bar-item
+.bar-item-btn
   cursor: pointer;
   padding: 10px;
   background: rgba(80,100,120,0.8);
@@ -146,20 +145,21 @@ export default {
 .bar-item:hover
   background: rgba(80,100,120,0.5);
 
-.bar-item.pause
+.bar-item-btn.pause
   background: rgba(80,100,120,1);
 
-.bar-item.disabled
+.bar-item-btn.disabled
   background: rgba(80,100,120,0);
+  border-right: 1px solid rgba(80,100,120,0.1);
   color: rgba(100,100,100,0.5);
   cursor: not-allowed;
 
-.date
+.bar-item-date
   font-size: 12px;
   font-weight: 800;
   position: absolute;
-  top: 10px;
-  left: 180px;
+  left: 50%;
+  transform: translate(-50%, 12px);
 
 
 .time-horizon
