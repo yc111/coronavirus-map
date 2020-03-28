@@ -4,6 +4,7 @@
       v-model='themeStyle'
       size='mini'
       class='theme-control'
+      :class='language === "en" ? "" : "theme-control-zh"'
       fill='rgba(80,100,120,0.8)'
       @change='handleThemeChange'
     >
@@ -234,6 +235,9 @@ export default {
   top: 10px;
   right: 287px;
   z-index: 9;
+
+.theme-control-zh
+  right: 298px;
 
 .dashboard-control-btn
   display: block;
