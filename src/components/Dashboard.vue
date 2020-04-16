@@ -248,6 +248,7 @@ export default {
     right: 0;
   .dashboard.total
     height: auto;
+    padding: 10px;
 
 .data-cell
   display: flex;
