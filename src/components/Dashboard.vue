@@ -255,7 +255,7 @@ export default {
   flex-direction: column;
 
 .num
-  font-weight: 800;
+  font-weight: 500;
   font-size: 30px;
   letter-spacing: -2px;
 
