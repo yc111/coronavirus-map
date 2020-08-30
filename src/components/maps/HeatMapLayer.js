@@ -129,7 +129,7 @@ class HeatMapLayer {
       id: 'circle-layer',
       type: 'circle',
       source: 'world-geo',
-      minzoom: 4,
+      minzoom: 3,
       filter: filterExp,
       paint: circlePaint,
     });
@@ -138,7 +138,7 @@ class HeatMapLayer {
       id: 'count-layer',
       type: 'symbol',
       source: 'world-geo',
-      minzoom: 4,
+      minzoom: 3,
       filter: filterExp,
       layout: textLayout,
       paint: textPaint,
