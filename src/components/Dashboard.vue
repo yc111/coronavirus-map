@@ -161,7 +161,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
+  height: 60px;
   padding: 10px 20px;
 
 .dashboard.country
@@ -256,8 +256,8 @@ export default {
 
 .num
   font-weight: 500;
-  font-size: 30px;
-  letter-spacing: -2px;
+  font-size: 24px;
+  letter-spacing: -.5px;
 
 .num-title
   font-size: 12px;
