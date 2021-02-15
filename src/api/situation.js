@@ -12,7 +12,7 @@ export const fetchAssets = filename => axios.request({
 });
 
 export const fetchWorldData = date => axios.request({
-  baseURL: 'http://47.99.222.13/api',
+  baseURL: 'http://map.champyin.com/api',
   url: `/${date}`,
   withCredentials: false,
 }).catch((e) => {
