@@ -2,19 +2,26 @@ import moment from 'moment';
 
 const excludeDates = ['2020-04-22', '2020-04-23', '2020-04-24'];
 
-export function getCurentDate() {
-  const current = moment();
-  let end = current.format('YYYY-MM-DD');
-  if (current.hour() < 9) {
-    end = current.add(-1, 'd').format('YYYY-MM-DD');
+export function getEndDate() {
+  // 数据截止到 2020.10.21
+  const now = new Date().getTime();
+  const end = new Date('2020.10.21').getTime();
+  if (now > end) {
+    return '2020-10-21';
   }
-  return end;
+
+  const current = moment();
+  let formatCurrent = current.format('YYYY-MM-DD');
+  if (current.hour() < 9) {
+    formatCurrent = current.add(-1, 'd').format('YYYY-MM-DD');
+  }
+  return formatCurrent;
 }
 
 export function genDateList(start) {
   let d = moment(start);
   const dates = [];
-  const end = getCurentDate();
+  const end = getEndDate();
 
   dates.push(start);
   while (d < moment(end)) {

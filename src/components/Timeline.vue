@@ -163,7 +163,7 @@ export default {
 
 
 .time-horizon
-  border-bottom: 1px solid rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(0,0,0,0.2);
   position: relative;
   top: 13px;
   span
@@ -178,7 +178,7 @@ export default {
       display: block;
       width: 1px;
       height: 6px;
-      background: rgba(0,0,0,.5);
+      background: rgba(0,0,0,.2);
       top: 1px;
     &:after
       visibility: hidden;
@@ -206,7 +206,7 @@ export default {
     &:nth-of-type(even)
       padding: 2px 0;
       &:before
-        background-color: rgba(0,0,0,.5);
+        background-color: rgba(0,0,0,.2);
         position: relative;
         width: 1px;
         height: 3px;
